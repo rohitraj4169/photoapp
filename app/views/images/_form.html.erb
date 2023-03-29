@@ -1,0 +1,46 @@
+<%= form_for @image,class:"shadow p-3 mb-3 bg-info rounded", :html => {multipart: true, :class => "form-horizontal image" } do |f| %>
+
+  <% if @image.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @image.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-4">
+      <%= f.text_field :name, :class => 'form-control',required:true %>
+    </div>
+    <%=f.error_span(:name) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :avatar, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-4">
+      <% if @image.new_record? %>
+        <%= f.file_field :avatar, required: true %>
+      <% else %>
+        <%= image_tag @image.avatar.variant(resize_to_limit: [400, 400]) %>
+        <%= f.file_field :avatar %>
+      <% end %>
+    </div>
+    <%=f.error_span(:picture) %>
+  </div>
+ 
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                images_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

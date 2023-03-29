@@ -1,0 +1,40 @@
+  <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+       
+        <%= link_to 'PhotoApp', root_path, class:"navbar-brand" %>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+          <% if current_user %>
+          <ul class="nav navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Image
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to 'Upload Image', new_image_path, class:"dropdown-item" %><br>
+                <%= link_to 'Show Image', images_path, class:"dropdown-item" %>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+          <% end %>
+          <ul class="nav navbar-right col-md-4">
+            <% if current_user %>
+                <%= link_to ('<i class="fa fa-user"></i> ' + truncate(current_user.email, length: 25)).html_safe,
+                edit_user_registration_path, title: 'Edit Profile' %>
+             
+              <%= link_to "log out", destroy_user_session_path, data: { method: :delete }, class: 'btn btn-primary '  %>
+            <% else %>
+              <li class="col-md-4 pull-right">
+              <%= link_to('Sign In', new_user_session_path, class: 'btn btn-primary', title: 'Sign In') %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
